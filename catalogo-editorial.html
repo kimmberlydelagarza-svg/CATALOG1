@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colección · Édition Privée</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#14110D;
+    --tinta-2:#1D1913;
+    --marfil:#EFE9DF;
+    --oro:#C3A165;
+    --taupe:#7E7566;
+    --hairline:rgba(239,233,223,.14);
+    --serif:"Cormorant Garamond", Didot, "Bodoni MT", Georgia, serif;
+    --sans:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--tinta);color:var(--marfil);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+  /* ── Masthead ─────────────────────────────── */
+  header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:26px 5vw;mix-blend-mode:normal;background:linear-gradient(var(--tinta) 55%,transparent)}
+  .wordmark{font-family:var(--serif);font-size:20px;letter-spacing:.36em;text-transform:uppercase}
+  .estado{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe)}
+  .estado.vivo{color:var(--oro)}
+
+  /* ── Portada ──────────────────────────────── */
+  .portada{min-height:88vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 5vw 40px;position:relative}
+  .issue{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--oro);margin-bottom:26px}
+  .portada h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,8vw,104px);line-height:1.02}
+  .portada h1 em{font-style:italic;color:var(--oro)}
+  .portada p{margin-top:26px;max-width:420px;color:var(--taupe);font-size:13px;line-height:1.8;letter-spacing:.04em}
+  .flecha{position:absolute;bottom:32px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);animation:latido 3.5s ease-in-out infinite}
+  @keyframes latido{0%,100%{opacity:.35}50%{opacity:1}}
+
+  /* ── El espacio: piezas flotando ──────────── */
+  .espacio{position:relative;padding:8vh 6vw 16vh;display:grid;grid-template-columns:repeat(12,1fr);row-gap:14vh;column-gap:2vw}
+  .pieza{position:relative;cursor:pointer;background:transparent;border:0;text-align:left;color:inherit;font:inherit;animation:flotar var(--dur,9s) ease-in-out var(--del,0s) infinite;transition:transform .6s ease}
+  .pieza:hover{transform:translateY(-6px)}
+  .pieza:focus-visible{outline:1px solid var(--oro);outline-offset:12px}
+  @keyframes flotar{0%,100%{translate:0 0}50%{translate:0 -14px}}
+  .foto{aspect-ratio:4/5;overflow:hidden;background:var(--tinta-2)}
+  .foto img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92);transition:filter .8s}
+  .pieza:hover .foto img{filter:saturate(1.05)}
+  .foto .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-weight:300;font-size:64px;color:var(--taupe);background:radial-gradient(ellipse at 30% 20%, #26211A 0%, var(--tinta-2) 70%)}
+  .num{position:absolute;top:-34px;left:-6px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--oro);letter-spacing:.1em}
+  .pie{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:14px;border-top:1px solid var(--hairline);padding-top:12px}
+  .pie .n{font-family:var(--serif);font-size:19px;font-weight:400}
+  .pie .c{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe);white-space:nowrap}
+  .agotada .foto{opacity:.4}
+  .agotada .pie .c::after{content:" · vendida"}
+
+  /* Posiciones editoriales: se asignan por JS con estos patrones */
+  .p-a{grid-column:2/span 4}
+  .p-b{grid-column:8/span 4;margin-top:18vh}
+  .p-c{grid-column:5/span 4;margin-top:-6vh}
+  .p-d{grid-column:1/span 3;margin-top:10vh}
+  .p-e{grid-column:9/span 3;margin-top:-8vh}
+  .p-f{grid-column:3/span 5;margin-top:12vh}
+
+  /* ── Spread de detalle ────────────────────── */
+  .spread{position:fixed;inset:0;z-index:100;background:var(--tinta);display:none;overflow-y:auto}
+  .spread.abierto{display:block;animation:aparecer .5s ease}
+  @keyframes aparecer{from{opacity:0}to{opacity:1}}
+  .spread-int{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr;gap:6vw;align-items:center;padding:10vh 7vw}
+  .spread .foto-g{aspect-ratio:4/5;overflow:hidden;background:var(--tinta-2)}
+  .spread .foto-g img{width:100%;height:100%;object-fit:cover}
+  .spread .foto-g .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:110px;color:var(--taupe);background:radial-gradient(ellipse at 30% 20%, #26211A 0%, var(--tinta-2) 70%)}
+  .cerrar{position:fixed;top:26px;right:5vw;z-index:110;background:transparent;border:1px solid var(--hairline);color:var(--marfil);font-family:var(--sans);font-size:10px;letter-spacing:.26em;text-transform:uppercase;padding:10px 18px;cursor:pointer;transition:border-color .3s,color .3s}
+  .cerrar:hover,.cerrar:focus-visible{border-color:var(--oro);color:var(--oro)}
+  .d-num{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--oro);margin-bottom:18px}
+  .d-nombre{font-family:var(--serif);font-weight:300;font-size:clamp(38px,4.6vw,64px);line-height:1.04;margin-bottom:34px}
+  .d-nombre em{font-style:italic;color:var(--oro)}
+  .ficha{border-top:1px solid var(--hairline)}
+  .fila{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid var(--hairline);font-size:13px}
+  .fila .k{letter-spacing:.24em;text-transform:uppercase;font-size:10px;color:var(--taupe);padding-top:3px}
+  .fila .v{font-family:var(--serif);font-size:17px;text-align:right}
+  .fila.precio .v{font-size:24px;color:var(--oro)}
+  .fila.precio .velo{filter:blur(8px);user-select:none;transition:filter .9s ease}
+  body.abierto-codigo .fila.precio .velo{filter:blur(0)}
+  .gate-inline{display:flex;gap:0;margin-top:26px;border:1px solid var(--hairline)}
+  body.abierto-codigo .gate-inline{display:none}
+  .gate-inline input{flex:1;border:0;background:transparent;color:var(--marfil);padding:13px 16px;font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;outline:none}
+  .gate-inline input::placeholder{color:var(--taupe)}
+  .gate-inline button{border:0;background:var(--marfil);color:var(--tinta);padding:13px 20px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background .3s}
+  .gate-inline button:hover{background:var(--oro)}
+  .gate-msg{font-size:10px;letter-spacing:.16em;margin-top:10px;min-height:14px;color:var(--taupe)}
+  .gate-msg.error{color:#B3624E}
+  .cta{display:inline-block;margin-top:34px;border:1px solid var(--oro);color:var(--oro);text-decoration:none;font-size:10px;letter-spacing:.28em;text-transform:uppercase;padding:14px 26px;transition:background .3s,color .3s}
+  .cta:hover{background:var(--oro);color:var(--tinta)}
+
+  footer{text-align:center;padding:10vh 5vw 8vh;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe)}
+
+  /* ── Responsive ───────────────────────────── */
+  @media(max-width:860px){
+    .espacio{grid-template-columns:repeat(6,1fr);row-gap:9vh;padding:6vh 7vw 12vh}
+    .p-a{grid-column:1/span 4}
+    .p-b{grid-column:3/span 4;margin-top:4vh}
+    .p-c{grid-column:1/span 5;margin-top:2vh}
+    .p-d{grid-column:2/span 4;margin-top:4vh}
+    .p-e{grid-column:1/span 4;margin-top:2vh}
+    .p-f{grid-column:2/span 5;margin-top:4vh}
+    .spread-int{grid-template-columns:1fr;gap:40px;padding:12vh 7vw}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">Colección</div>
+  <div class="estado" id="estado">Demo · datos de ejemplo</div>
+</header>
+
+<section class="portada">
+  <div class="issue">Édition Privée · No. 01</div>
+  <h1>Piezas que<br><em>flotan</em> en el tiempo</h1>
+  <p>Recorre la colección como quien hojea una revista. Toca una pieza para conocer su historia. El precio se revela con tu código de referida.</p>
+  <div class="flecha">Desliza</div>
+</section>
+
+<main class="espacio" id="espacio"></main>
+
+<footer>Consultas y citas privadas</footer>
+
+<!-- Spread de detalle -->
+<div class="spread" id="spread" role="dialog" aria-modal="true">
+  <button class="cerrar" onclick="cerrar()">Cerrar ✕</button>
+  <div class="spread-int">
+    <div class="foto-g" id="d-foto"></div>
+    <div>
+      <div class="d-num" id="d-num"></div>
+      <h2 class="d-nombre" id="d-nombre"></h2>
+      <div class="ficha">
+        <div class="fila"><span class="k">Categoría</span><span class="v" id="d-cat"></span></div>
+        <div class="fila"><span class="k">Metal</span><span class="v" id="d-metal"></span></div>
+        <div class="fila" id="fila-piedra"><span class="k">Piedra</span><span class="v" id="d-piedra"></span></div>
+        <div class="fila precio"><span class="k">Precio</span><span class="v velo" id="d-precio"></span></div>
+      </div>
+      <div class="gate-inline">
+        <input id="codigo" type="text" placeholder="Código de referida" autocomplete="off" onkeydown="if(event.key==='Enter')validar()">
+        <button onclick="validar()">Revelar</button>
+      </div>
+      <div class="gate-msg" id="msg">En este demo, prueba el código NUMEN</div>
+      <a class="cta" id="d-cta" href="#" target="_blank" rel="noopener">Consultar esta pieza</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN · Pega aquí tus URLs de Google Sheets publicado
+   ───────────────────────────────────────────────────────────────
+   Archivo > Compartir > Publicar en la web > cada pestaña como CSV
+   Mientras estén vacías (""), el catálogo usa datos de ejemplo.
+
+   Pestaña "Piezas":  codigo | nombre | categoria | metal | piedra | precio | imagen | disponible
+   Pestaña "Codigos": codigo | activo (si / no)
+═══════════════════════════════════════════════════════════════ */
+const SHEET_PIEZAS_URL  = "";
+const SHEET_CODIGOS_URL = "";
+const WHATSAPP = "5210000000000"; // tu número con lada, sin espacios
+
+const DEMO_PIEZAS = [
+  {codigo:"KFJ-114", nombre:"Anillo Aurora", categoria:"Anillo", metal:"Oro amarillo 14k", piedra:"Diamante oval 0.70 ct", precio:"48,500", imagen:"", disponible:"si"},
+  {codigo:"KFJ-108", nombre:"Argollas Eterna", categoria:"Argollas", metal:"Oro blanco 14k", piedra:"", precio:"19,800", imagen:"", disponible:"si"},
+  {codigo:"KFJ-121", nombre:"Dije Luna", categoria:"Dije", metal:"Oro rosa 14k", piedra:"Zafiro 0.30 ct", precio:"12,400", imagen:"", disponible:"si"},
+  {codigo:"KFJ-097", nombre:"Aretes Sol", categoria:"Aretes", metal:"Oro amarillo 18k", piedra:"Diamantes lab 0.50 ct", precio:"27,900", imagen:"", disponible:"no"},
+  {codigo:"KFJ-130", nombre:"Pulsera Río", categoria:"Pulsera", metal:"Oro blanco 14k", piedra:"Diamantes naturales", precio:"36,200", imagen:"", disponible:"si"},
+  {codigo:"KFJ-125", nombre:"Anillo Marea", categoria:"Anillo", metal:"Platino", piedra:"Esmeralda 0.85 ct", precio:"62,000", imagen:"", disponible:"si"}
+];
+let codigosValidos = ["NUMEN"];
+let PIEZAS = [];
+
+function parseCSV(t){
+  const filas=[];let fila=[],c="",q=false;
+  for(let i=0;i<t.length;i++){const ch=t[i];
+    if(q){ if(ch==='"'){ if(t[i+1]==='"'){c+='"';i++;} else q=false; } else c+=ch; }
+    else{ if(ch==='"')q=true; else if(ch===','){fila.push(c);c="";}
+      else if(ch==='\n'){fila.push(c);filas.push(fila);fila=[];c="";}
+      else if(ch!=='\r')c+=ch; } }
+  if(c||fila.length){fila.push(c);filas.push(fila);}
+  const cab=filas.shift().map(h=>h.trim().toLowerCase());
+  return filas.filter(f=>f.some(x=>x.trim()!=="")).map(f=>{
+    const o={};cab.forEach((h,i)=>o[h]=(f[i]||"").trim());return o;});
+}
+
+const PATRONES=["p-a","p-b","p-c","p-d","p-e","p-f"];
+
+function romano(n){const r=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX"];return r[n-1]||n;}
+
+function render(piezas){
+  PIEZAS=piezas;
+  const esp=document.getElementById("espacio");
+  esp.innerHTML="";
+  piezas.forEach((p,i)=>{
+    const vendida=(p.disponible||"si").toLowerCase().startsWith("n");
+    const b=document.createElement("button");
+    b.className="pieza "+PATRONES[i%PATRONES.length]+(vendida?" agotada":"");
+    b.style.setProperty("--dur",(8+(i%4)*1.3)+"s");
+    b.style.setProperty("--del",(i*0.7)+"s");
+    const foto=p.imagen?`<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`:`<div class="placeholder">${(p.nombre||"·").charAt(0)}</div>`;
+    b.innerHTML=`<span class="num">${romano(i+1)}.</span>
+      <div class="foto">${foto}</div>
+      <div class="pie"><span class="n">${p.nombre||""}</span><span class="c">${p.categoria||""}</span></div>`;
+    b.addEventListener("click",()=>abrir(i));
+    esp.appendChild(b);
+  });
+}
+
+function abrir(i){
+  const p=PIEZAS[i];
+  const f=document.getElementById("d-foto");
+  f.innerHTML=p.imagen?`<img src="${p.imagen}" alt="${p.nombre}">`:`<div class="placeholder">${(p.nombre||"·").charAt(0)}</div>`;
+  document.getElementById("d-num").textContent="Pieza "+romano(i+1)+" · "+(p.codigo||"");
+  const partes=(p.nombre||"").split(" ");
+  document.getElementById("d-nombre").innerHTML=partes.length>1?partes[0]+" <em>"+partes.slice(1).join(" ")+"</em>":p.nombre;
+  document.getElementById("d-cat").textContent=p.categoria||"—";
+  document.getElementById("d-metal").textContent=p.metal||"—";
+  document.getElementById("fila-piedra").style.display=p.piedra?"flex":"none";
+  document.getElementById("d-piedra").textContent=p.piedra||"";
+  document.getElementById("d-precio").textContent="$"+p.precio+" MXN";
+  document.getElementById("d-cta").href="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent("Hola, me interesa la pieza "+(p.codigo||p.nombre));
+  document.getElementById("spread").classList.add("abierto");
+  document.body.style.overflow="hidden";
+}
+function cerrar(){
+  document.getElementById("spread").classList.remove("abierto");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")cerrar();});
+
+function validar(){
+  const inp=document.getElementById("codigo");
+  const msg=document.getElementById("msg");
+  const v=inp.value.trim().toUpperCase();
+  if(v!==""&&codigosValidos.map(c=>c.toUpperCase()).includes(v)){
+    document.body.classList.add("abierto-codigo");
+    msg.textContent="";
+  } else {
+    msg.textContent="Código no reconocido. Verifica con tu referida.";
+    msg.className="gate-msg error";
+    inp.focus();
+  }
+}
+
+async function iniciar(){
+  if(SHEET_PIEZAS_URL){
+    try{
+      const [rp,rc]=await Promise.all([fetch(SHEET_PIEZAS_URL),SHEET_CODIGOS_URL?fetch(SHEET_CODIGOS_URL):null]);
+      const piezas=parseCSV(await rp.text());
+      if(rc){
+        const cods=parseCSV(await rc.text());
+        codigosValidos=cods.filter(c=>(c.activo||"si").toLowerCase().startsWith("s")).map(c=>c.codigo);
+      }
+      render(piezas);
+      const est=document.getElementById("estado");
+      est.textContent="Conectado · Google Sheets";
+      est.classList.add("vivo");
+      document.getElementById("msg").textContent="";
+      return;
+    }catch(e){console.error("No se pudo leer el sheet, usando demo:",e);}
+  }
+  render(DEMO_PIEZAS);
+}
+iniciar();
+</script>
+</body>
+</html>
