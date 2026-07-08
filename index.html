@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kimm's · Fine Jewelry · Édition Privée</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#600916;
+    --tinta-2:#4F382F;
+    --tinta-3:#3E2A22;
+    --marfil:#F6E9CF;
+    --oro:#C09E85;
+    --oro-2:#D8BC9E;
+    --taupe:#C29F84;
+    --taupe-2:#9C7E68;
+    --hairline:rgba(246,233,207,.15);
+    --hairline-oro:rgba(192,158,133,.4);
+    --serif:"Cormorant Garamond", Didot, "Bodoni MT", Georgia, serif;
+    --script:"Pinyon Script", "Cormorant Garamond", cursive;
+    --sans:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--tinta);
+    color:var(--marfil);
+    font-family:var(--sans);
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+    position:relative;
+  }
+  /* Viñeta cálida + grano sutil para textura de impresión */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% -10%, transparent 55%, rgba(0,0,0,.45) 100%);
+  }
+  .grano{
+    position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  header,section,main,footer,.spread{position:relative;z-index:3}
+
+  /* ── Masthead ─────────────────────────────── */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 5vw;
+    background:linear-gradient(180deg, #3A050D 0%, var(--tinta) 55%, rgba(96,9,22,.82) 80%, transparent 100%);
+    padding-bottom:34px;
+  }
+  .wordmark{display:flex;flex-direction:column;gap:2px;line-height:1}
+  .wordmark .mark{font-family:var(--sans);font-weight:500;font-size:22px;letter-spacing:.34em;text-transform:uppercase;color:var(--marfil);line-height:1;padding-left:.34em}
+  .wordmark .sub{font-family:var(--sans);font-weight:400;font-size:8px;letter-spacing:.42em;text-transform:uppercase;color:var(--taupe);padding-left:.3em}
+  .estado{
+    display:flex;align-items:center;gap:9px;
+    font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--taupe);
+  }
+  .estado::before{
+    content:"";width:5px;height:5px;border-radius:50%;
+    background:var(--taupe-2);
+  }
+  .estado.vivo{color:var(--oro)}
+  .estado.vivo::before{background:var(--oro);box-shadow:0 0 8px rgba(195,161,101,.7)}
+
+  /* ── Portada ──────────────────────────────── */
+  .portada{
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;
+    padding:104px 5vw 34px;position:relative;
+  }
+  .issue{
+    font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--oro);
+    margin-bottom:34px;display:flex;align-items:center;gap:16px;
+  }
+  .issue::before,.issue::after{content:"";width:34px;height:1px;background:var(--hairline-oro)}
+  .portada h1{
+    font-family:var(--serif);font-weight:300;
+    font-size:clamp(38px,6.4vw,84px);line-height:.98;letter-spacing:-.01em;
+    max-width:15ch;
+  }
+  .portada h1 em{font-style:italic;font-weight:400;color:var(--oro)}
+  .portada p{
+    margin-top:22px;max-width:46ch;color:var(--taupe);
+    font-size:12.5px;line-height:1.9;letter-spacing:.05em;
+  }
+  .flecha{
+    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:14px;
+    font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--taupe);
+    animation:latido 3.6s ease-in-out infinite;
+  }
+  .flecha .linea{width:1px;height:42px;background:linear-gradient(var(--taupe),transparent)}
+  @keyframes latido{0%,100%{opacity:.3}50%{opacity:.95}}
+
+  /* ── Intro editorial (ref. índice) ────────── */
+  .intro{max-width:720px;margin:0 auto;padding:5vh 6vw 0;text-align:center}
+  .intro-eyebrow{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--oro);margin-bottom:22px;display:flex;align-items:center;justify-content:center;gap:16px}
+  .intro-eyebrow::before,.intro-eyebrow::after{content:"";width:30px;height:1px;background:var(--hairline-oro)}
+  .intro-title{font-family:var(--serif);font-weight:300;font-size:clamp(30px,4vw,54px);line-height:1.05;letter-spacing:-.01em}
+  .intro-title em{font-style:italic;color:var(--oro)}
+  .intro-desc{margin:24px auto 0;max-width:52ch;color:var(--taupe);font-size:13px;line-height:2;letter-spacing:.04em}
+  .intro-mas{max-width:52ch;margin:0 auto;color:var(--taupe);font-size:13px;line-height:2;letter-spacing:.04em;overflow:hidden;max-height:0;opacity:0;transition:max-height .7s ease,opacity .6s ease,margin .6s ease}
+  .intro-mas.abierto{max-height:220px;opacity:1;margin-top:18px}
+  .leermas{margin-top:26px;background:transparent;border:0;color:var(--marfil);font-family:var(--sans);font-size:9px;letter-spacing:.32em;text-transform:uppercase;cursor:pointer;padding:9px 2px;border-bottom:1px solid var(--hairline-oro);transition:color .3s,border-color .3s}
+  .leermas:hover{color:var(--oro);border-color:var(--oro)}
+
+  /* ── Índice de categorías ─────────────────── */
+  .indice{display:flex;justify-content:center;flex-wrap:wrap;margin:5vh auto 0;padding:0 6vw;max-width:920px}
+  .indice button{background:transparent;border:0;color:var(--taupe);font-family:var(--sans);font-size:10px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;padding:12px 22px;transition:color .35s;position:relative}
+  .indice button:hover{color:var(--marfil)}
+  .indice button.activo{color:var(--oro)}
+  .indice button:not(:last-child)::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:12px;background:var(--hairline)}
+
+  /* ── El espacio: piezas flotando ──────────── */
+  .espacio{
+    position:relative;padding:9vh 5vw 16vh;
+    display:grid;grid-template-columns:repeat(3,1fr);align-items:start;
+    row-gap:10vh;column-gap:5vw;
+  }
+  .pieza{
+    position:relative;cursor:pointer;background:transparent;border:0;
+    text-align:left;color:inherit;font:inherit;
+    animation:flotar var(--dur,9s) ease-in-out var(--del,0s) infinite;
+    transition:transform .7s cubic-bezier(.2,.7,.2,1);
+    opacity:0;
+  }
+  .pieza.entrada{animation:flotar var(--dur,9s) ease-in-out var(--del,0s) infinite, surgir 1.2s ease var(--rev,0s) forwards}
+  .pieza:hover{transform:translateY(-10px)}
+  .pieza:focus-visible{outline:1px solid var(--oro);outline-offset:14px}
+  @keyframes flotar{0%,100%{translate:0 0}50%{translate:0 -16px}}
+  @keyframes surgir{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+  .foto{
+    aspect-ratio:4/5;overflow:hidden;background:var(--tinta-2);
+    position:relative;
+  }
+  .foto::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    box-shadow:inset 0 0 0 1px rgba(239,233,223,.06);
+    background:linear-gradient(180deg, transparent 62%, rgba(0,0,0,.35));
+    opacity:.6;transition:opacity .8s;
+  }
+  .pieza:hover .foto::after{opacity:.25}
+  .foto img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.02);transition:transform 1.4s cubic-bezier(.2,.7,.2,1),filter .8s}
+  .pieza:hover .foto img{transform:scale(1.045);filter:saturate(1.03) contrast(1.04)}
+  .foto .placeholder{
+    width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(56px,7vw,88px);
+    color:var(--taupe);
+    background:radial-gradient(ellipse at 32% 22%, #6E4A3F 0%, var(--tinta-2) 58%, var(--tinta) 100%);
+  }
+  .num{
+    position:absolute;top:-40px;left:0;
+    font-family:var(--serif);font-style:italic;font-size:15px;color:var(--oro);
+    letter-spacing:.08em;display:flex;align-items:center;gap:12px;
+  }
+  .num::after{content:"";width:30px;height:1px;background:var(--hairline-oro)}
+  .pie{
+    display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+    margin-top:16px;border-top:1px solid var(--hairline);padding-top:14px;
+  }
+  .pie .n{font-family:var(--serif);font-size:21px;font-weight:400;letter-spacing:.005em}
+  .pie .c{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);white-space:nowrap;padding-top:3px}
+  /* Precio en la rejilla: velado (borroso) hasta validar un código */
+  .precio-grid{
+    margin-top:10px;font-family:var(--serif);font-size:16px;
+    color:var(--oro);letter-spacing:.02em;
+    filter:blur(6px);user-select:none;transition:filter 1s ease;
+  }
+  body.abierto-codigo .precio-grid{filter:blur(0)}
+  .agotada{pointer-events:auto}
+  .agotada .foto{opacity:.4}
+  .agotada .pie .n,.agotada .pie .c{color:var(--taupe-2)}
+  .agotada .pie .c::after{content:" · vendida";color:var(--oro);opacity:.7}
+
+  /* Posiciones editoriales asimétricas */
+  /* Rejilla uniforme y alineada: todas las piezas al mismo tamaño y misma línea base */
+
+  /* ── Spread de detalle ────────────────────── */
+  .spread{position:fixed;inset:0;z-index:100;background:linear-gradient(160deg, #470813 0%, #2E040B 100%);display:none;overflow-y:auto}
+  .spread.abierto{display:block;animation:aparecer .6s ease}
+  @keyframes aparecer{from{opacity:0}to{opacity:1}}
+  @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes fotoIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:none}}
+  .spread.abierto .foto-g{animation:fotoIn 1s cubic-bezier(.2,.7,.2,1) backwards}
+  .spread.abierto .spread-int>div:last-child>*{animation:cardIn .7s cubic-bezier(.2,.7,.2,1) backwards}
+  .spread.abierto .spread-int>div:last-child>*:nth-child(1){animation-delay:.1s}
+  .spread.abierto .spread-int>div:last-child>*:nth-child(2){animation-delay:.18s}
+  .spread.abierto .spread-int>div:last-child>*:nth-child(3){animation-delay:.26s}
+  .spread.abierto .spread-int>div:last-child>*:nth-child(4){animation-delay:.34s}
+  .spread.abierto .spread-int>div:last-child>*:nth-child(5){animation-delay:.42s}
+  .spread-int{
+    min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;
+    gap:6vw;align-items:center;padding:12vh 7vw 10vh;
+  }
+  .spread .foto-g{aspect-ratio:4/5;overflow:hidden;background:var(--tinta-2);position:relative}
+  .spread .foto-g::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(239,233,223,.07);pointer-events:none}
+  .spread .foto-g img{width:100%;height:100%;object-fit:cover;filter:saturate(.94) contrast(1.02)}
+  .spread .foto-g .placeholder{
+    width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-style:italic;font-size:clamp(90px,12vw,150px);color:var(--taupe);
+    background:radial-gradient(ellipse at 30% 20%, #6E4A3F 0%, var(--tinta-2) 58%, var(--tinta) 100%);
+  }
+  .cerrar{
+    position:fixed;top:24px;right:5vw;z-index:110;background:transparent;
+    border:1px solid var(--hairline);color:var(--marfil);font-family:var(--sans);
+    font-size:9px;letter-spacing:.3em;text-transform:uppercase;padding:11px 20px;cursor:pointer;
+    transition:border-color .4s,color .4s,letter-spacing .4s;
+  }
+  .cerrar:hover,.cerrar:focus-visible{border-color:var(--oro);color:var(--oro);letter-spacing:.34em}
+  .d-num{
+    font-family:var(--sans);font-size:10px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--oro);margin-bottom:22px;display:flex;align-items:center;gap:14px;
+  }
+  .d-num::after{content:"";flex:0 0 40px;height:1px;background:var(--hairline-oro)}
+  .d-nombre{
+    font-family:var(--serif);font-weight:300;font-size:clamp(40px,5vw,72px);
+    line-height:1;letter-spacing:-.01em;margin-bottom:40px;
+  }
+  .d-nombre em{font-style:italic;font-weight:400;color:var(--oro)}
+  .ficha{border-top:1px solid var(--hairline)}
+  .fila{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:16px 0;border-bottom:1px solid var(--hairline);font-size:13px}
+  .fila .k{letter-spacing:.28em;text-transform:uppercase;font-size:9px;color:var(--taupe)}
+  .fila .v{font-family:var(--serif);font-size:18px;text-align:right}
+  .fila.precio{padding:20px 0}
+  .fila.precio .v{font-size:30px;color:var(--oro);letter-spacing:.01em}
+  .fila.precio .velo{filter:blur(8px);user-select:none;transition:filter 1s ease;cursor:default}
+  body.abierto-codigo .fila.precio .velo{filter:blur(0)}
+  .gate-inline{display:flex;margin-top:30px;border:1px solid var(--hairline);transition:border-color .4s}
+  .gate-inline:focus-within{border-color:var(--hairline-oro)}
+  body.abierto-codigo .gate-inline{display:none}
+  .gate-inline input{flex:1;border:0;background:transparent;color:var(--marfil);padding:15px 18px;font-family:var(--sans);font-size:12px;letter-spacing:.22em;text-transform:uppercase;outline:none}
+  .gate-inline input::placeholder{color:var(--taupe-2);letter-spacing:.22em}
+  .gate-inline button{border:0;background:var(--marfil);color:var(--tinta);padding:15px 24px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);font-weight:400;transition:background .4s,color .4s}
+  .gate-inline button:hover{background:var(--oro)}
+  .gate-msg{font-size:10px;letter-spacing:.14em;margin-top:14px;min-height:16px;color:var(--taupe);font-style:italic;font-family:var(--serif);font-size:14px}
+  .gate-msg.error{color:#C07458;font-style:normal;font-family:var(--sans);font-size:10px;letter-spacing:.14em}
+  .gate-ok{display:none;margin-top:30px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--oro)}
+  body.abierto-codigo .gate-ok{display:block}
+
+  /* Gate en la portada: se ingresa una sola vez */
+  .portada-gate{margin-top:28px;width:100%;max-width:430px;display:flex;flex-direction:column;align-items:center}
+  .gate-label{font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--oro);margin-bottom:16px}
+  .portada-gate .gate-inline{margin-top:0;width:100%}
+  .portada-gate .gate-msg{text-align:center}
+  .portada-gate .gate-ok{margin-top:22px;text-align:center}
+  .spread-lock{margin-top:26px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--taupe)}
+  body.abierto-codigo .spread-lock{display:none}
+  /* Gate dentro del spread (ficha del producto) */
+  .spread-gate{margin-top:28px}
+  body.abierto-codigo .spread-gate{display:none}
+  .spread-gate .gate-label{font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--oro);margin-bottom:14px}
+  .spread-gate .gate-inline{margin-top:0;max-width:360px}
+  .spread-gate .gate-msg{margin-top:12px}
+  .cta{
+    display:inline-flex;align-items:center;gap:12px;margin-top:36px;
+    border:1px solid var(--oro);color:var(--oro);text-decoration:none;
+    font-size:9px;letter-spacing:.32em;text-transform:uppercase;padding:16px 30px;
+    transition:background .4s,color .4s;font-family:var(--sans);
+  }
+  .cta::after{content:"→";font-size:12px;transition:transform .4s}
+  .cta:hover{background:var(--oro);color:var(--tinta)}
+  .cta:hover::after{transform:translateX(4px)}
+
+  footer{
+    text-align:center;padding:14vh 5vw 9vh;
+    font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--taupe);
+    display:flex;flex-direction:column;align-items:center;gap:22px;
+  }
+  footer .marca{font-family:var(--sans);font-weight:500;font-size:22px;letter-spacing:.34em;text-transform:uppercase;color:var(--marfil);line-height:1}
+  footer .rule{width:44px;height:1px;background:var(--hairline-oro)}
+
+  /* ── Responsive ───────────────────────────── */
+  @media(max-width:860px){
+    /* Masthead compacto */
+    header{padding:16px 6vw;background:var(--tinta)}
+    .wordmark .mark{font-size:18px;letter-spacing:.26em}
+    .wordmark .sub{font-size:7px;letter-spacing:.34em}
+    .estado{font-size:8px;letter-spacing:.2em}
+
+    /* Portada: cabe en una pantalla */
+    .portada{padding:92px 7vw 40px;min-height:auto}
+    .issue{margin-bottom:22px;letter-spacing:.4em}
+    .portada h1{font-size:clamp(40px,12vw,60px)}
+    .portada p{margin-top:20px;font-size:13px;line-height:1.85}
+
+    /* Gate: campo a lo alto y legible (ya no se corta) */
+    .portada-gate{margin-top:26px;max-width:340px}
+    .gate-inline{flex-direction:column;border:0;gap:10px;margin-top:24px}
+    .gate-inline input{border:1px solid var(--hairline);text-align:center;letter-spacing:.12em;font-size:14px;padding:16px}
+    .gate-inline input::placeholder{letter-spacing:.12em}
+    .gate-inline button{padding:16px;letter-spacing:.24em;font-size:10px}
+
+    /* Índice de categorías: barra fija y deslizable */
+    .indice{
+      position:sticky;top:52px;z-index:40;
+      margin:5vh 0 0;padding:11px 6vw;max-width:none;
+      justify-content:flex-start;flex-wrap:nowrap;gap:8px;
+      overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+      background:rgba(96,9,22,.94);
+      -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+      border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);
+    }
+    .indice::-webkit-scrollbar{display:none}
+    .indice button{
+      flex:0 0 auto;padding:9px 16px;border:1px solid var(--hairline);
+      font-size:9.5px;letter-spacing:.16em;color:var(--taupe);white-space:nowrap;
+      transition:color .3s,background .3s,border-color .3s;
+    }
+    .indice button:not(:last-child)::after{display:none}
+    .indice button.activo{color:var(--tinta);background:var(--oro);border-color:var(--oro)}
+
+    /* Piezas: una columna, tamaño uniforme, más aire */
+    .espacio{grid-template-columns:1fr;row-gap:8vh;column-gap:0;padding:7vh 7vw 16vh;scroll-margin-top:110px}
+    .pieza{margin-top:0!important}
+    .foto{aspect-ratio:4/5}
+    .pie{margin-top:14px;padding-top:12px}
+    .pie .n{font-size:23px}
+    .precio-grid{font-size:17px}
+    .num{top:-32px}
+    .intro{padding-top:0}
+
+    /* Spread: pantalla completa, foto arriba, cierre grande */
+    .spread-int{grid-template-columns:1fr;gap:30px;padding:88px 7vw 12vh}
+    .spread .foto-g{max-height:60vh}
+    .cerrar{top:16px;right:6vw;padding:13px 20px;font-size:10px}
+    .d-nombre{font-size:clamp(38px,10vw,52px);margin-bottom:30px}
+    .spread-gate .gate-inline{max-width:none}
+    .cta{width:100%;justify-content:center;padding:18px 24px;font-size:10px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .pieza{opacity:1!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#600916">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#600916"/>
+    <text x="600" y="420" text-anchor="middle" font-family="Jost, sans-serif" font-size="120" letter-spacing="42" fill="#F6E9CF">KIMM'S</text>
+    <text x="600" y="480" text-anchor="middle" font-family="Jost, sans-serif" font-size="26" letter-spacing="16" fill="#C09E85">.FINE JEWELRY</text>
+    <line x1="540" y1="530" x2="660" y2="530" stroke="#C09E85" stroke-width="1"/>
+  </svg>
+</template>
+<div class="grano" aria-hidden="true"></div>
+
+<header>
+  <div class="wordmark"><span class="mark">Kimm&rsquo;s</span><span class="sub">.FINE JEWELRY</span></div>
+  <div class="estado" id="estado">Catálogo privado</div>
+</header>
+
+<section class="portada">
+  <div class="issue">TIMELESS</div>
+  <h1>Catalogo No.01</h1>
+  <p>Recorre la colección como quien hojea una revista. Toca una pieza para conocer su historia. Ingresa tu código de referida una sola vez para revelar los precios.</p>
+  <div class="portada-gate" id="portada-gate">
+    <div class="gate-label">Acceso a precios</div>
+    <div class="gate-inline">
+      <input id="codigo" type="text" placeholder="Código de referida" autocomplete="off" onkeydown="if(event.key==='Enter')validar('codigo','msg')">
+      <button onclick="validar('codigo','msg')">Revelar precios</button>
+    </div>
+    <div class="gate-msg" id="msg">Ingresa el código que te compartimos</div>
+    <div class="gate-ok">Precios revelados durante esta sesión.</div>
+  </div>
+</section>
+
+<nav class="indice" id="indice" aria-label="Categorías"></nav>
+
+<main class="espacio" id="espacio"></main>
+<footer>
+  <span class="marca">Kimm&rsquo;s</span>
+  <span class="rule"></span>
+  <span>San Pedro Garza García, NL · Envío nacional · Consultas y citas privadas</span>
+</footer>
+
+<!-- Spread de detalle -->
+<div class="spread" id="spread" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="cerrar" onclick="cerrar()">Cerrar ✕</button>
+  <div class="spread-int">
+    <div class="foto-g" id="d-foto"></div>
+    <div>
+      <div class="d-num" id="d-num"></div>
+      <h2 class="d-nombre" id="d-nombre"></h2>
+      <div class="ficha">
+        <div class="fila"><span class="k">Categoría</span><span class="v" id="d-cat"></span></div>
+        <div class="fila"><span class="k">Metal</span><span class="v" id="d-metal"></span></div>
+        <div class="fila" id="fila-piedra"><span class="k">Piedra</span><span class="v" id="d-piedra"></span></div>
+        <div class="fila precio"><span class="k">Precio</span><span class="v velo" id="d-precio"></span></div>
+      </div>
+      <div class="spread-lock">Ingresa tu código para revelar el precio de esta pieza.</div>
+      <div class="spread-gate">
+        <div class="gate-label">Acceso a precios</div>
+        <div class="gate-inline">
+          <input id="codigo-spread" type="text" placeholder="Código de referida" autocomplete="off" onkeydown="if(event.key==='Enter')validar('codigo-spread','msg-spread')">
+          <button onclick="validar('codigo-spread','msg-spread')">Revelar</button>
+        </div>
+        <div class="gate-msg" id="msg-spread">Ingresa el código que te compartimos</div>
+      </div>
+      <a class="cta" id="d-cta" href="#" target="_blank" rel="noopener">Consultar esta pieza</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ✦ CÓMO ACTUALIZAR TU CATÁLOGO ✦
+   ───────────────────────────────────────────────────────────────
+   No necesitas tocar este archivo. Solo dos cosas:
+
+   1) Edita  «piezas.csv»  (ábrelo con Excel o Numbers).
+      Una fila por joya. En la columna «imagen» escribe SOLO el
+      nombre del archivo de la foto, por ejemplo:  aurora.jpg
+
+   2) Pon esa foto en la carpeta  «imagenes/»  con ese mismo nombre.
+
+   Los códigos de referida se editan en  «codigos.csv».
+   Guarda, vuelve a subir la carpeta a tu hosting, y listo.
+═══════════════════════════════════════════════════════════════ */
+const WHATSAPP = "5210000000000"; // tu número con lada, sin espacios
+
+/* Archivos de datos y carpeta de fotos (rutas dentro de esta carpeta) */
+const ARCHIVO_PIEZAS  = "piezas.csv";
+const ARCHIVO_CODIGOS = "codigos.csv";
+const CARPETA_IMAGENES = "imagenes/";
+
+/* ─ Respaldo: si no se encuentra piezas.csv, se usa esta lista ─ */
+const CODIGOS = ["KIMMS", "LAURA10", "VIP2026"];
+
+const CATALOGO = [
+  {codigo:"KMM-114", nombre:"Anillo Aurora", categoria:"Anillo", metal:"Oro amarillo 14k", piedra:"Diamante oval 0.70 ct", precio:"48,500", imagen:"", disponible:"si"},
+  {codigo:"KMM-108", nombre:"Argollas Eterna", categoria:"Argollas", metal:"Oro blanco 14k", piedra:"", precio:"19,800", imagen:"", disponible:"si"},
+  {codigo:"KMM-121", nombre:"Dije Luna", categoria:"Dije", metal:"Oro rosa 14k", piedra:"Zafiro 0.30 ct", precio:"12,400", imagen:"", disponible:"si"},
+  {codigo:"KMM-097", nombre:"Aretes Sol", categoria:"Aretes", metal:"Oro amarillo 18k", piedra:"Diamantes lab 0.50 ct", precio:"27,900", imagen:"", disponible:"no"},
+  {codigo:"KMM-130", nombre:"Pulsera Río", categoria:"Pulsera", metal:"Oro blanco 14k", piedra:"Diamantes naturales", precio:"36,200", imagen:"", disponible:"si"},
+  {codigo:"KMM-125", nombre:"Anillo Marea", categoria:"Anillo", metal:"Platino", piedra:"Esmeralda 0.85 ct", precio:"62,000", imagen:"", disponible:"si"}
+];
+
+/* ─────────────────────────────────────────────────────────────
+   OPCIONAL · Google Sheets (déjalo vacío si editas la lista de arriba).
+   Si algún día quieres datos en la nube, pega aquí los enlaces
+   y tomarán prioridad sobre CATALOGO / CODIGOS.
+───────────────────────────────────────────────────────────── */
+const SHEET_PIEZAS_URL  = "";
+const SHEET_CODIGOS_URL = "";
+
+/* Normaliza cualquier enlace de Google Sheets a su exportación CSV.
+   Acepta: el enlace "Publicar en la Web" (.../pub?...&output=csv),
+   o un enlace normal de compartir (.../edit#gid=0) y lo convierte. */
+function csvURL(u){
+  u=(u||"").trim();
+  if(!u) return u;
+  if(u.includes("output=csv")||u.includes("/pub?")) return u;      // ya es CSV publicado
+  const m=u.match(/\/spreadsheets\/d\/([^/]+)/);                    // enlace normal
+  if(m){
+    const gid=(u.match(/[#&?]gid=(\d+)/)||[])[1]||"0";
+    return `https://docs.google.com/spreadsheets/d/${m[1]}/export?format=csv&gid=${gid}`;
+  }
+  return u;
+}
+
+const DEMO_PIEZAS = CATALOGO;
+let codigosValidos = CODIGOS.slice();
+
+/* Resuelve la ruta de la foto: nombre de archivo → carpeta imagenes/;
+   si ya es una URL (http) o ruta con carpeta, se deja igual. */
+function rutaImagen(img){
+  img=(img||"").trim();
+  if(!img) return "";
+  if(/^https?:\/\//i.test(img) || img.includes("/")) return img;
+  return CARPETA_IMAGENES + img;
+}
+/* Si la foto no existe o el nombre no coincide, muestra el placeholder */
+function imgFallback(el){
+  const ph=document.createElement("div");
+  ph.className="placeholder";
+  ph.textContent=(el.alt||"·").charAt(0);
+  el.replaceWith(ph);
+}
+let PIEZAS = [];
+let ALL_PIEZAS = [];
+let CAT_ACTIVA = "Todo";
+
+/* Parser CSV propio: soporta comillas dobles y comas dentro de celdas */
+function parseCSV(t){
+  const filas=[];let fila=[],c="",q=false;
+  for(let i=0;i<t.length;i++){const ch=t[i];
+    if(q){ if(ch==='"'){ if(t[i+1]==='"'){c+='"';i++;} else q=false; } else c+=ch; }
+    else{ if(ch==='"')q=true; else if(ch===','){fila.push(c);c="";}
+      else if(ch==='\n'){fila.push(c);filas.push(fila);fila=[];c="";}
+      else if(ch!=='\r')c+=ch; } }
+  if(c||fila.length){fila.push(c);filas.push(fila);}
+  const cab=filas.shift().map(h=>h.trim().toLowerCase());
+  return filas.filter(f=>f.some(x=>x.trim()!=="")).map(f=>{
+    const o={};cab.forEach((h,i)=>o[h]=(f[i]||"").trim());return o;});
+}
+
+const PATRONES=["p-a","p-b","p-c","p-d","p-e","p-f"];
+
+function romano(n){const r=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX"];return r[n-1]||n;}
+
+function render(piezas){
+  PIEZAS=piezas;
+  const esp=document.getElementById("espacio");
+  esp.innerHTML="";
+  piezas.forEach((p,i)=>{
+    const vendida=(p.disponible||"si").toLowerCase().startsWith("n");
+    const b=document.createElement("button");
+    b.className="pieza "+PATRONES[i%PATRONES.length]+(vendida?" agotada":"");
+    b.style.setProperty("--dur",(8+(i%4)*1.3)+"s");
+    b.style.setProperty("--del",(i*0.7)+"s");
+    b.style.setProperty("--rev",(i*0.12)+"s");
+    const src=rutaImagen(p.imagen);
+    const foto=src?`<img src="${src}" alt="${p.nombre}" loading="lazy" onerror="imgFallback(this)">`:`<div class="placeholder">${(p.nombre||"·").charAt(0)}</div>`;
+    b.innerHTML=`<div class="foto">${foto}</div>
+      <div class="pie"><span class="n">${p.nombre||""}</span><span class="c">${p.categoria||""}</span></div>
+      <div class="precio-grid">$${p.precio} MXN</div>`;
+    b.addEventListener("click",()=>abrir(i));
+    esp.appendChild(b);
+  });
+  revelarAlEntrar();
+}
+
+/* Entrada escalonada de las piezas al aparecer en pantalla */
+function revelarAlEntrar(){
+  const piezas=document.querySelectorAll(".pieza");
+  if(!("IntersectionObserver"in window)){piezas.forEach(p=>p.classList.add("entrada"));return;}
+  const io=new IntersectionObserver((ents)=>{
+    ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add("entrada");io.unobserve(e.target);}});
+  },{threshold:.15});
+  piezas.forEach(p=>io.observe(p));
+}
+
+/* Intro editorial: expandir / contraer descripción */
+function toggleMas(){
+  const m=document.getElementById("intro-mas");
+  const b=document.getElementById("leermas");
+  const ab=m.classList.toggle("abierto");
+  b.textContent=ab?"Leer menos":"Leer más";
+}
+
+/* Índice de categorías: filtro de un clic, sin salir de la página */
+function montar(piezas){ ALL_PIEZAS=piezas; construirIndice(); render(piezas); }
+function construirIndice(){
+  const cats=["Todo",...Array.from(new Set(ALL_PIEZAS.map(p=>(p.categoria||"").trim()).filter(Boolean)))];
+  const nav=document.getElementById("indice");
+  nav.innerHTML="";
+  cats.forEach(c=>{
+    const b=document.createElement("button");
+    b.textContent=c;
+    if(c===CAT_ACTIVA)b.classList.add("activo");
+    b.addEventListener("click",()=>filtrar(c));
+    nav.appendChild(b);
+  });
+}
+function filtrar(cat){
+  CAT_ACTIVA=cat;
+  document.querySelectorAll(".indice button").forEach(b=>b.classList.toggle("activo",b.textContent===cat));
+  const sub=cat==="Todo"?ALL_PIEZAS:ALL_PIEZAS.filter(p=>(p.categoria||"").trim()===cat);
+  render(sub);
+}
+
+function abrir(i){
+  const p=PIEZAS[i];
+  const f=document.getElementById("d-foto");
+  const src=rutaImagen(p.imagen);
+  f.innerHTML=src?`<img src="${src}" alt="${p.nombre}" onerror="imgFallback(this)">`:`<div class="placeholder">${(p.nombre||"·").charAt(0)}</div>`;
+  document.getElementById("d-num").textContent="Pieza "+romano(i+1)+" · "+(p.codigo||"");
+  const partes=(p.nombre||"").split(" ");
+  document.getElementById("d-nombre").innerHTML=partes.length>1?partes[0]+" <em>"+partes.slice(1).join(" ")+"</em>":p.nombre;
+  document.getElementById("d-cat").textContent=p.categoria||"—";
+  document.getElementById("d-metal").textContent=p.metal||"—";
+  document.getElementById("fila-piedra").style.display=p.piedra?"flex":"none";
+  document.getElementById("d-piedra").textContent=p.piedra||"";
+  document.getElementById("d-precio").textContent="$"+p.precio+" MXN";
+  animarPrecio();
+  document.getElementById("d-cta").href="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent("Hola, me interesa la pieza "+(p.codigo||"")+" — "+(p.nombre||""));
+  const sp=document.getElementById("spread");
+  sp.classList.add("abierto");
+  sp.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+function animarPrecio(){
+  const velo=document.getElementById("d-precio");
+  if(!velo)return;
+  velo.style.transition="none";
+  if(document.body.classList.contains("abierto-codigo")){
+    velo.style.filter="blur(10px)";velo.style.opacity="0";velo.style.transform="translateY(6px)";
+    void velo.offsetWidth; /* reflow para reiniciar la animación */
+    velo.style.transition="filter 1.1s ease, opacity 1.1s ease, transform 1.1s ease";
+    velo.style.filter="blur(0)";velo.style.opacity="1";velo.style.transform="translateY(0)";
+  } else {
+    velo.style.filter="";velo.style.opacity="";velo.style.transform="";velo.style.transition="";
+  }
+}
+function cerrar(){
+  const sp=document.getElementById("spread");
+  sp.classList.remove("abierto");
+  sp.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")cerrar();});
+
+function validar(inputId,msgId){
+  inputId=inputId||"codigo";msgId=msgId||"msg";
+  const inp=document.getElementById(inputId);
+  const msg=document.getElementById(msgId);
+  const v=inp.value.trim().toUpperCase();
+  if(v!==""&&codigosValidos.map(c=>(c||"").toUpperCase()).includes(v)){
+    document.body.classList.add("abierto-codigo");
+    document.getElementById("msg").textContent="";
+    if(msg)msg.textContent="";
+    animarPrecio();
+  } else {
+    msg.textContent="Código no reconocido. Verifica con tu referida.";
+    msg.className="gate-msg error";
+    inp.focus();
+  }
+}
+
+async function iniciar(){
+  const est=document.getElementById("estado");
+  // 1) Google Sheets (solo si pegaste un enlace)
+  if(SHEET_PIEZAS_URL){
+    try{
+      const [rp,rc]=await Promise.all([fetch(csvURL(SHEET_PIEZAS_URL)),SHEET_CODIGOS_URL?fetch(csvURL(SHEET_CODIGOS_URL)):null]);
+      const piezas=parseCSV(await rp.text());
+      if(rc){
+        const cods=parseCSV(await rc.text());
+        codigosValidos=cods.filter(c=>(c.activo||"si").toLowerCase().startsWith("s")).map(c=>c.codigo);
+      }
+      montar(piezas);
+      est.textContent="Conectado · Google Sheets";est.classList.add("vivo");
+      document.getElementById("msg").textContent="";
+      return;
+    }catch(e){console.error("No se pudo leer el sheet:",e);}
+  }
+  // 2) Archivos locales piezas.csv / codigos.csv
+  try{
+    const rp=await fetch(ARCHIVO_PIEZAS,{cache:"no-store"});
+    if(!rp.ok) throw new Error("sin piezas.csv");
+    const piezas=parseCSV(await rp.text());
+    if(!piezas.length) throw new Error("piezas.csv vacío");
+    try{
+      const rc=await fetch(ARCHIVO_CODIGOS,{cache:"no-store"});
+      if(rc.ok){
+        const cods=parseCSV(await rc.text());
+        if(cods.length) codigosValidos=cods.filter(c=>(c.activo||"si").toLowerCase().startsWith("s")).map(c=>c.codigo);
+      }
+    }catch(e){/* usa CODIGOS por defecto */}
+    montar(piezas);
+    est.textContent="Catálogo privado";est.classList.add("vivo");
+    return;
+  }catch(e){console.warn("No se encontró piezas.csv, usando el catálogo de respaldo:",e);}
+  // 3) Respaldo incrustado
+  montar(DEMO_PIEZAS);
+  est.textContent="Catálogo privado";est.classList.add("vivo");
+}
+iniciar();
+</script>
+</body>
+</html>

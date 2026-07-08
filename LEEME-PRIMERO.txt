@@ -1,0 +1,44 @@
+CATÁLOGO KIMM'S — CÓMO USARLO
+=============================
+
+Esta carpeta es tu catálogo completo. Contiene:
+
+  index.html    → el catálogo (no necesitas abrirlo ni editarlo)
+  piezas.csv    → AQUÍ pones tus joyas
+  codigos.csv   → AQUÍ pones los códigos de referida
+  imagenes/     → AQUÍ pones las fotos
+
+─────────────────────────────────────────────
+PARA PUBLICARLO (la forma más fácil: Netlify)
+─────────────────────────────────────────────
+1. Entra a  https://app.netlify.com/drop
+2. Arrastra ESTA CARPETA COMPLETA (catalogo-kimms) a la ventana.
+3. Te da un enlace público al instante. Ese es tu catálogo.
+
+Para actualizar: cambia los archivos y vuelve a arrastrar la carpeta.
+
+─────────────────────────────────────────────
+PARA AGREGAR O CAMBIAR UNA JOYA
+─────────────────────────────────────────────
+1. Abre  piezas.csv  con Excel, Numbers o Google Sheets.
+2. Escribe una fila por joya:
+     codigo, nombre, categoria, metal, piedra, precio, imagen, disponible
+   - precio: solo el número (ej. 48,500)
+   - imagen: solo el nombre de la foto (ej. aurora.jpg)
+   - disponible: si  /  no
+3. Pon la foto en la carpeta  imagenes/  con ese mismo nombre.
+4. Guarda como CSV.
+
+─────────────────────────────────────────────
+CÓDIGOS DE REFERIDA
+─────────────────────────────────────────────
+Abre  codigos.csv  y pon una fila por código:
+     codigo, activo
+Solo los que tengan  activo = si  revelarán los precios.
+
+─────────────────────────────────────────────
+IMPORTANTE
+─────────────────────────────────────────────
+El catálogo lee los archivos solo cuando está SUBIDO a internet
+(Netlify o GitHub Pages). Si abres index.html con doble clic en tu
+computadora, verás la lista de ejemplo — es normal. Súbelo y funciona.
