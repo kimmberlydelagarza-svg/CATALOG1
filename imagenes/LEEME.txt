@@ -1,0 +1,18 @@
+CARPETA DE FOTOS
+================
+
+Pon aquí las fotos de tus joyas.
+
+1. El nombre del archivo debe coincidir EXACTO con lo que escribiste
+   en la columna "imagen" de piezas.csv.
+   Ejemplo: si en el CSV pusiste  aurora.jpg
+   aquí debe existir un archivo llamado  aurora.jpg
+
+2. Usa fotos verticales (proporción 4:5 se ve mejor) en .jpg o .png.
+
+3. Sin acentos ni espacios en los nombres (usa guiones):
+   correcto:  anillo-aurora.jpg
+   evita:     Anillo Aurora.JPG
+
+Si una foto falta o el nombre no coincide, la pieza mostrará
+un recuadro elegante con la inicial del nombre.
